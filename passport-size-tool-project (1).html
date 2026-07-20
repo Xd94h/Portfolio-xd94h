@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Passport Size TOOL // Arigastva Agency</title>
+<style>
+  :root{
+    --bg:#060807;
+    --bg-grid:#0d1210;
+    --green:#3dffa0;
+    --green-dim:#1f6b45;
+    --orange:#ffb648;
+    --orange-dim:#a97426;
+    --ink:#e8ece9;
+    --ink-dim:#8b9a92;
+    --panel:#0b0f0d;
+    --line:#17231d;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Segoe UI',Arial,sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  .mono{font-family:'Consolas','Courier New',monospace;}
+
+  /* background grid + glow */
+  .grid-bg{
+    position:fixed;top:0;left:0;width:100%;height:100%;
+    background-image:
+      linear-gradient(rgba(61,255,160,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(61,255,160,0.05) 1px, transparent 1px);
+    background-size:42px 42px;
+    z-index:-2;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+  }
+  .glow{
+    position:fixed;top:-200px;left:50%;transform:translateX(-50%);
+    width:900px;height:500px;
+    background:radial-gradient(ellipse, rgba(61,255,160,0.10), transparent 70%);
+    z-index:-1;
+  }
+
+  header{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:22px 60px;
+    border-bottom:1px solid var(--line);
+    position:sticky;top:0;background:rgba(6,8,7,0.85);backdrop-filter:blur(6px);
+    z-index:10;
+  }
+  .logo{
+    font-weight:800;letter-spacing:1px;font-size:15px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .logo .dot{
+    width:8px;height:8px;border-radius:50%;background:var(--green);
+    box-shadow:0 0 10px var(--green);
+  }
+  nav a{
+    color:var(--ink-dim);text-decoration:none;font-size:13px;
+    margin-left:32px;letter-spacing:0.5px;
+    font-family:'Consolas','Courier New',monospace;
+    transition:color .2s;
+  }
+  nav a:hover{color:var(--orange);}
+
+  .wrap{max-width:1100px;margin:0 auto;padding:0 60px;}
+
+  /* HERO */
+  .hero{padding:90px 0 60px;}
+  .sys-line{
+    color:var(--green);font-size:13px;letter-spacing:0.5px;
+    margin-bottom:18px;display:flex;align-items:center;gap:8px;
+  }
+  .sys-line .cursor{
+    width:8px;height:16px;background:var(--green);display:inline-block;
+    animation:blink 1s step-end infinite;
+  }
+  @keyframes blink{50%{opacity:0;}}
+  .eyebrow{
+    color:var(--orange);font-family:'Consolas','Courier New',monospace;
+    font-size:12px;letter-spacing:2px;margin-bottom:14px;
+    border-left:2px solid var(--orange);padding-left:10px;
+  }
+  h1.title{
+    font-size:64px;font-weight:800;letter-spacing:-1px;
+    background:linear-gradient(90deg,#ffffff,var(--green));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    margin-bottom:6px;line-height:1.05;
+  }
+  .subtitle{
+    font-size:19px;color:var(--ink-dim);margin:18px 0 26px;max-width:640px;
+  }
+  .subtitle b{color:var(--ink);}
+  .owner-tag{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'Consolas','Courier New',monospace;
+    font-size:13px;color:var(--orange-dim);
+    border:1px solid var(--orange-dim);border-radius:20px;
+    padding:6px 16px;margin-bottom:30px;
+  }
+  .owner-tag b{color:var(--orange);}
+
+  .cta-row{display:flex;gap:16px;margin-top:10px;flex-wrap:wrap;}
+  .btn{
+    padding:15px 26px;border-radius:8px;font-weight:700;font-size:14px;
+    text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+    letter-spacing:0.3px;transition:transform .15s, box-shadow .15s;
+  }
+  .btn-fill{
+    background:linear-gradient(90deg,#ff9d2f,#ffc766);color:#1a1200;
+    box-shadow:0 0 22px rgba(255,157,47,0.35);
+  }
+  .btn-fill:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(255,157,47,0.5);}
+  .btn-outline{
+    border:1px solid var(--green-dim);color:var(--green);background:transparent;
+  }
+  .btn-outline:hover{border-color:var(--green);background:rgba(61,255,160,0.06);transform:translateY(-2px);}
+
+  /* SECTION LABEL */
+  .sec-label{
+    display:flex;align-items:baseline;gap:14px;margin-bottom:34px;
+  }
+  .sec-num{color:var(--green-dim);font-family:'Consolas','Courier New',monospace;font-size:13px;}
+  .sec-title{font-size:30px;font-weight:800;}
+  .sec-title span{color:var(--orange);}
+  section{padding:70px 0;border-top:1px solid var(--line);}
+
+  /* OVERVIEW */
+  .overview-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:50px;align-items:start;}
+  .overview-grid p{color:var(--ink-dim);margin-bottom:16px;font-size:15.5px;}
+  .overview-grid p b{color:var(--ink);}
+  .stat-panel{
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:22px 24px;margin-bottom:14px;
+  }
+  .stat-panel .k{font-family:'Consolas','Courier New',monospace;font-size:11px;color:var(--ink-dim);letter-spacing:1px;}
+  .stat-panel .v{font-size:19px;font-weight:700;color:var(--green);margin-top:4px;}
+
+  /* PIPELINE / STEPS */
+  .pipeline{display:flex;flex-direction:column;gap:0;}
+  .step{
+    display:grid;grid-template-columns:70px 1fr;gap:26px;padding:26px 0;
+    border-bottom:1px solid var(--line);position:relative;
+  }
+  .step:last-child{border-bottom:none;}
+  .step-num{
+    font-family:'Consolas','Courier New',monospace;color:var(--orange);
+    font-size:13px;padding-top:3px;
+  }
+  .step-num .bar{
+    display:block;width:1px;height:100%;background:var(--line);
+    margin:8px auto 0;
+  }
+  .step h3{font-size:19px;margin-bottom:8px;}
+  .step h3 em{color:var(--green);font-style:normal;}
+  .step p{color:var(--ink-dim);font-size:15px;max-width:600px;}
+
+  /* FEATURE GRID */
+  .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .feat-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:26px 22px;transition:border-color .2s, transform .2s;
+  }
+  .feat-card:hover{border-color:var(--green-dim);transform:translateY(-4px);}
+  .feat-card .ic{
+    width:38px;height:38px;border:1px solid var(--orange-dim);border-radius:8px;
+    display:flex;align-items:center;justify-content:center;color:var(--orange);
+    font-family:'Consolas','Courier New',monospace;margin-bottom:16px;font-size:15px;
+  }
+  .feat-card h4{font-size:16px;margin-bottom:8px;}
+  .feat-card p{color:var(--ink-dim);font-size:14px;}
+
+  /* STACK TAGS */
+  .tag-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px;}
+  .tag{
+    font-family:'Consolas','Courier New',monospace;font-size:12.5px;
+    color:var(--green);border:1px solid var(--green-dim);
+    padding:7px 14px;border-radius:20px;background:rgba(61,255,160,0.04);
+  }
+
+  /* CONTACT CTA */
+  .cta-panel{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:50px 46px;text-align:center;
+  }
+  .cta-panel h2{font-size:30px;margin-bottom:12px;}
+  .cta-panel h2 span{color:var(--orange);}
+  .cta-panel p{color:var(--ink-dim);margin-bottom:28px;font-size:15.5px;}
+
+  /* FOOTER — matches reference exactly */
+  footer{padding:60px 0 0;}
+  .social-row{
+    display:flex;justify-content:center;gap:16px;padding-bottom:40px;
+  }
+  .social-row a{
+    width:44px;height:44px;border-radius:50%;border:1px solid var(--orange-dim);
+    display:flex;align-items:center;justify-content:center;color:var(--orange);
+    text-decoration:none;font-size:17px;transition:background .2s, transform .2s;
+  }
+  .social-row a:hover{background:rgba(255,182,72,0.08);transform:translateY(-3px);}
+  .footer-divider{border-top:1px solid var(--line);}
+  .footer-bottom{
+    text-align:center;padding:44px 0 40px;
+  }
+  .footer-bottom .brand{font-size:20px;font-weight:800;letter-spacing:0.5px;color:#fff;margin-bottom:16px;}
+  .footer-bottom .copy{
+    font-family:'Consolas','Courier New',monospace;font-size:12.5px;color:var(--ink-dim);
+    letter-spacing:0.5px;
+  }
+  .footer-bottom .copy em{color:var(--orange);font-style:italic;font-weight:600;}
+
+  @media(max-width:900px){
+    .wrap{padding:0 22px;}
+    header{padding:18px 22px;}
+    h1.title{font-size:40px;}
+    .overview-grid{grid-template-columns:1fr;}
+    .feat-grid{grid-template-columns:1fr;}
+    nav a{margin-left:16px;font-size:11px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="glow"></div>
+
+<header>
+  <div class="logo"><span class="dot"></span>ARIGASTVA_AGENCY</div>
+  <nav>
+    <a href="#overview">// OVERVIEW</a>
+    <a href="#pipeline">// PIPELINE</a>
+    <a href="#stack">// STACK</a>
+    <a href="#contact">// CONTACT</a>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="sys-line mono">SYSTEM: PROJECT_LOG/PASSPORT_TOOL.EXE — ACCESS GRANTED<span class="cursor"></span></div>
+    <div class="eyebrow">PROJECT_002 — CLIENT-SIDE UTILITY</div>
+    <h1 class="title">PASSPORT SIZE<br>TOOL</h1>
+    <p class="subtitle">A <b>professional photo sheet generator</b> — crop a photo Photoshop-style, drop it into a PSD passport-sheet template, and export six perfectly aligned prints. Every time.</p>
+    <div class="owner-tag mono">OWNER — <a href="https://www.instagram.com/oxd94h" target="_blank" style="color:var(--orange);text-decoration:none;"><b>@OXD94H</b></a> · BUILT BY SHIVAM</div>
+    <div class="cta-row">
+      <a class="btn btn-fill" href="https://xd94h.github.io/Photo_studio/" target="_blank">LAUNCH TOOL →</a>
+      <a class="btn btn-outline" href="#pipeline">SEE HOW IT WORKS</a>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section id="overview">
+    <div class="sec-label"><span class="sec-num mono">01</span><span class="sec-title">Project <span>Overview</span></span></div>
+    <div class="overview-grid">
+      <div>
+        <p><b>Passport Size TOOL</b> solves a small but genuinely annoying problem — turning a single photo into a print-ready passport sheet without opening Photoshop. Most people either pay a studio for six duplicate prints or waste time manually aligning crops in an editor.</p>
+        <p>This tool cuts that down to three steps: <b>upload a photo, crop it manually with full control (zoom, straighten, aspect ratio presets), then drop it into a PSD template</b> where six boxes are auto-aligned with borders and padding calculated for you.</p>
+        <p>Everything runs <b>entirely client-side</b> — no backend, no server upload, no waiting. The output can be exported as PSD, PNG, JPG, PDF, or a full ZIP bundle, ready to send straight to print.</p>
+      </div>
+      <div>
+        <div class="stat-panel"><div class="k mono">ROLE</div><div class="v">Full-stack Builder</div></div>
+        <div class="stat-panel"><div class="k mono">FOCUS</div><div class="v">Web Utility Tool</div></div>
+        <div class="stat-panel"><div class="k mono">OUTPUT FORMATS</div><div class="v">PSD · PNG · JPG · PDF · ZIP</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PIPELINE -->
+  <section id="pipeline">
+    <div class="sec-label"><span class="sec-num mono">02</span><span class="sec-title">How It <span>Works</span></span></div>
+    <div class="pipeline">
+      <div class="step">
+        <div class="step-num mono">01<span class="bar"></span></div>
+        <div><h3><em>Upload</em> the source photo</h3><p>Pull an image straight from your device, paste one from clipboard (Ctrl+V), or import it via a direct link — whatever's fastest.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num mono">02<span class="bar"></span></div>
+        <div><h3><em>Crop</em> it manually, precisely</h3><p>A Photoshop-style crop editor with live preview: zoom, straighten by degree, drag-resize the crop box, and snap to presets — Passport 35×45mm, Square 1:1, Standard 3:4, or Landscape 4:3.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num mono">03<span class="bar"></span></div>
+        <div><h3><em>Drop</em> into a PSD template</h3><p>Upload a PSD with six passport boxes; placeholders are auto-detected from the layer structure and padding is auto-calculated — no manual alignment needed. Templates you upload are saved permanently in-browser for reuse.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num mono">04</div>
+        <div><h3><em>Generate</em> the final sheet</h3><p>One click produces the finished six-up sheet, ready to download as PSD, PNG, JPG, PDF, or a full ZIP — with a fullscreen preview before you commit.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="sec-label"><span class="sec-num mono">03</span><span class="sec-title">Key <span>Features</span></span></div>
+    <div class="feat-grid">
+      <div class="feat-card"><div class="ic">Zx</div><h4>Manual Crop Editor</h4><p>Zoom, straighten, drag-resize, and rotate in 90° steps with keyboard shortcuts for speed.</p></div>
+      <div class="feat-card"><div class="ic">Ar</div><h4>Aspect Ratio Presets</h4><p>Passport 35×45mm, Square, Standard 3:4, and Landscape 4:3 built in, plus a free-form mode.</p></div>
+      <div class="feat-card"><div class="ic">6x</div><h4>Six-Up Auto Layout</h4><p>Each cropped photo fills a full row of six boxes in order — extra rows hide their borders automatically.</p></div>
+      <div class="feat-card"><div class="ic">Ps</div><h4>PSD-Native Templates</h4><p>Reads real PSD layer structure to auto-detect placeholders and calculate padding.</p></div>
+      <div class="feat-card"><div class="ic">Lc</div><h4>Local, Persistent Storage</h4><p>Saved PSDs and preferences live in your browser permanently — no account, no re-uploading.</p></div>
+      <div class="feat-card"><div class="ic">Ex</div><h4>Multi-Format Export</h4><p>Download the finished sheet as PSD, PNG, JPG, PDF, or a bundled ZIP of everything at once.</p></div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack">
+    <div class="sec-label"><span class="sec-num mono">04</span><span class="sec-title">Built <span>Client-Side</span></span></div>
+    <p style="color:var(--ink-dim);max-width:640px;margin-bottom:20px;font-size:15.5px;">No backend server — the entire crop-to-export pipeline, including PSD parsing and rendering, runs in the browser. Admin panels and template libraries were deliberately left out of this client-only build.</p>
+    <div class="tag-row">
+      <span class="tag">HTML5 CANVAS</span>
+      <span class="tag">JAVASCRIPT</span>
+      <span class="tag">PSD PARSING</span>
+      <span class="tag">CLIENT-SIDE STORAGE</span>
+      <span class="tag">FILE EXPORT (PNG/JPG/PDF/ZIP)</span>
+      <span class="tag">RESPONSIVE UI</span>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="cta-panel">
+      <h2>Want a tool like this <span>built for you?</span></h2>
+      <p>From cropping utilities to full brand systems — Arigastva Agency builds it end to end.</p>
+      <div class="cta-row" style="justify-content:center;">
+        <a class="btn btn-fill" href="https://xd94h.github.io/Photo_studio/" target="_blank">TRY THE LIVE TOOL →</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="social-row">
+    <a href="https://www.instagram.com/oxd94h" target="_blank" title="Instagram">◎</a>
+    <a href="#" title="WhatsApp">☏</a>
+    <a href="#" title="Email">✉</a>
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-bottom">
+    <div class="brand">ARIGASTVA.AGENCY</div>
+    <div class="copy">© 2026 ARIGASTVA AGENCY — DESIGNED &amp; BUILT BY <em>Shivam</em></div>
+  </div>
+</footer>
+
+</body>
+</html>
