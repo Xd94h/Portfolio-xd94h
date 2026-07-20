@@ -335,17 +335,34 @@
 </div>
 
 <footer>
-  <div class="social-row">
-    <a href="https://www.instagram.com/oxd94h" target="_blank" title="Instagram">◎</a>
-    <a href="#" title="WhatsApp">☏</a>
-    <a href="#" title="Email">✉</a>
-  </div>
-  <div class="footer-divider"></div>
-  <div class="footer-bottom">
-    <div class="brand">ARIGASTVA.AGENCY</div>
-    <div class="copy">© 2026 ARIGASTVA AGENCY — DESIGNED &amp; BUILT BY <em>Shivam</em></div>
+  <div class="wrap">
+    <div class="foot-logo">ARIGASTVA<span style="color:var(--amber)">.</span>AGENCY</div>
+    <div class="foot-rule"></div>
+    <p class="credit">© 2026 ARIGASTVA AGENCY — DESIGNED &amp; BUILT BY <em>Shivam</em></p>
   </div>
 </footer>
+
+<script>
+  /* scroll reveal - staggers items that share a parent grid */
+  const revealEls = document.querySelectorAll('.reveal');
+  const groupCounters = new WeakMap();
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const parent = el.parentElement;
+        const count = groupCounters.get(parent) || 0;
+        el.style.transitionDelay = `${Math.min(count * 90, 360)}ms`;
+        groupCounters.set(parent, count + 1);
+        el.classList.add('is-visible');
+        revealObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+  revealEls.forEach((el) => revealObserver.observe(el));
+</script>
 
 </body>
 </html>
