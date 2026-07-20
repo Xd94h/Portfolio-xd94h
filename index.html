@@ -229,14 +229,19 @@
     background:linear-gradient(160deg, var(--bg-panel-2), var(--bg-panel));
     border:1px dashed var(--line); border-radius:8px; padding:24px; min-height:170px;
     display:flex; flex-direction:column; justify-content:space-between;
-    transition: border-color .25s;
+    transition: border-color .25s, transform .25s; cursor:pointer;
   }
-  .work-card:hover{border-color:var(--amber); border-style:solid;}
+  .work-card:hover{border-color:var(--amber); border-style:solid; transform:translateY(-4px);}
   .work-top{display:flex; justify-content:space-between; align-items:flex-start;}
   .work-idx{font-family:var(--mono); color:var(--green-dim); font-size:.8rem;}
   .work-cat{font-family:var(--mono); font-size:.65rem; color:var(--amber); border:1px solid var(--amber); padding:3px 8px; border-radius:2px; letter-spacing:.5px;}
   .work-card h3{font-family:var(--display); font-size:1.2rem; margin-top:16px; color:var(--text-dim);}
   .work-card p{color:var(--text-dim); font-size:.85rem; margin-top:8px; line-height:1.55; opacity:.7;}
+  .work-open{
+    font-family:var(--mono); font-size:.68rem; letter-spacing:.5px; color:var(--green-dim);
+    margin-top:14px; display:inline-flex; align-items:center; gap:6px; transition:color .2s;
+  }
+  .work-card:hover .work-open{color:var(--amber);}
 
   /* ---------- CONTACT (warm glow, centered, reference-style) ---------- */
   #contact{
@@ -446,31 +451,30 @@
       <div class="sec-line"></div>
     </div>
     <div class="work-grid">
-      <div class="work-card reveal">
-<a href="passport-tool.html" style="text-decoration:none;color:inherit;display:block;">
-        <div class="work-card reveal">
-          <div class="work-top"><span class="work-idx">/01</span><span class="work-cat">PLACEHOLDER</span></div>
-          <h3>
-            \
-          </h3>
-          <p>Add a short description of this project here.</p>
-        </div>
-        </a>
-      <div class="work-card reveal">
+      <a href="project-one.html" target="_blank" rel="noopener" class="work-card reveal">
+        <div class="work-top"><span class="work-idx">/01</span><span class="work-cat">PLACEHOLDER</span></div>
+        <h3>Project One</h3>
+        <p>Add a short description of this project here.</p>
+        <span class="work-open">VIEW PROJECT →</span>
+      </a>
+      <a href="project-two.html" target="_blank" rel="noopener" class="work-card reveal">
         <div class="work-top"><span class="work-idx">/02</span><span class="work-cat">PLACEHOLDER</span></div>
         <h3>Project Two</h3>
         <p>Add a short description of this project here.</p>
-      </div>
-      <div class="work-card reveal">
+        <span class="work-open">VIEW PROJECT →</span>
+      </a>
+      <a href="project-three.html" target="_blank" rel="noopener" class="work-card reveal">
         <div class="work-top"><span class="work-idx">/03</span><span class="work-cat">PLACEHOLDER</span></div>
         <h3>Project Three</h3>
         <p>Add a short description of this project here.</p>
-      </div>
-      <div class="work-card reveal">
+        <span class="work-open">VIEW PROJECT →</span>
+      </a>
+      <a href="project-four.html" target="_blank" rel="noopener" class="work-card reveal">
         <div class="work-top"><span class="work-idx">/04</span><span class="work-cat">PLACEHOLDER</span></div>
         <h3>Project Four</h3>
         <p>Add a short description of this project here.</p>
-      </div>
+        <span class="work-open">VIEW PROJECT →</span>
+      </a>
     </div>
   </div>
 </section>
