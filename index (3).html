@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kuchu Puchu 💗</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink: #ff6fa5;
+    --pink-deep: #e0407f;
+    --pink-light: #ffd9e8;
+    --gold: #ffcf7a;
+    --black: #0a0a0a;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  body{
+    font-family: 'Poppins', sans-serif;
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 15% 20%, #ffd9ec 0%, transparent 40%),
+      radial-gradient(circle at 85% 15%, #ffe4c4 0%, transparent 40%),
+      radial-gradient(circle at 50% 90%, #ffd0e0 0%, transparent 45%),
+      linear-gradient(135deg, #fff0f5 0%, #ffe6ef 40%, #ffe9d9 100%);
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  /* floating hearts background */
+  .heart{
+    position:fixed;
+    top:110%;
+    font-size:22px;
+    color: var(--pink);
+    opacity:0.55;
+    animation: floatUp linear infinite;
+    pointer-events:none;
+    z-index:0;
+    user-select:none;
+  }
+  @keyframes floatUp{
+    0%{ transform: translateY(0) translateX(0) rotate(0deg); opacity:0;}
+    10%{opacity:0.6;}
+    90%{opacity:0.5;}
+    100%{ transform: translateY(-115vh) translateX(20px) rotate(25deg); opacity:0;}
+  }
+
+  .wrapper{
+    position:relative;
+    z-index:2;
+    max-width: 620px;
+    margin: 40px auto;
+    padding: 20px;
+  }
+
+  .frame{
+    background: #fff;
+    border: 2px solid var(--black);
+    border-radius: 26px;
+    padding: 34px 24px 30px;
+    box-shadow:
+      0 0 0 2px var(--pink-light),
+      0 25px 60px rgba(224,64,127,0.35),
+      0 0 45px rgba(255,111,165,0.25);
+    position:relative;
+  }
+
+  .frame::before{
+    content:"";
+    position:absolute;
+    inset: -12px;
+    border: 1px dashed var(--pink);
+    border-radius: 34px;
+    opacity:0.5;
+    pointer-events:none;
+  }
+
+  .title-top{
+    text-align:center;
+    font-family: 'Dancing Script', cursive;
+    color: var(--pink-deep);
+    font-size: 26px;
+    margin: 8px 0 22px;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+  }
+
+  .heading{
+    text-align:center;
+    font-family:'Great Vibes', cursive;
+    font-size: clamp(34px, 9vw, 58px);
+    line-height: 1.25;
+    white-space: nowrap;
+    background: linear-gradient(90deg, #1f8a7a, #17a589 60%, #1f8a7a);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    margin: 18px 0 26px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+
+  .photo-holder{
+    position:relative;
+    border-radius: 18px;
+    overflow:hidden;
+    border: 2px solid var(--black);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+  }
+
+  .photo-holder img{
+    display:block;
+    width:100%;
+    height:auto;
+  }
+
+  .photo-holder::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    box-shadow: inset 0 0 40px rgba(255,111,165,0.25);
+    pointer-events:none;
+  }
+
+  .caption{
+    text-align:center;
+    font-family:'Dancing Script', cursive;
+    color:#c73d76;
+    font-size: 20px;
+    margin-top: 14px;
+  }
+
+  /* letter box trigger */
+  .letter-box{
+    margin: 28px auto 6px;
+    max-width: 340px;
+    background: linear-gradient(135deg, #fff5f8, #ffe3ec);
+    border: 2px solid var(--black);
+    border-radius: 16px;
+    padding: 18px 20px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    cursor:pointer;
+    box-shadow: 0 8px 22px rgba(224,64,127,0.28);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    position:relative;
+  }
+  .letter-box:hover{
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 14px 30px rgba(224,64,127,0.4);
+  }
+  .letter-box .env{
+    font-size: 34px;
+    filter: drop-shadow(0 3px 4px rgba(0,0,0,0.15));
+    animation: wiggle 2.2s ease-in-out infinite;
+  }
+  @keyframes wiggle{
+    0%,100%{transform: rotate(-4deg);}
+    50%{transform: rotate(4deg);}
+  }
+  .letter-box .txt strong{
+    display:block;
+    color: var(--black);
+    font-size: 15px;
+  }
+  .letter-box .txt span{
+    color:#b4406c;
+    font-size:12.5px;
+  }
+
+  .footer-note{
+    text-align:center;
+    margin-top: 18px;
+    font-family:'Dancing Script', cursive;
+    color:#7a5a63;
+    font-size:15px;
+  }
+
+  /* overlay */
+  .overlay{
+    position:fixed;
+    inset:0;
+    background: rgba(20,5,15,0.35);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    opacity:0;
+    visibility:hidden;
+    transition: opacity 0.4s ease;
+    z-index: 999;
+    padding: 20px;
+  }
+  .overlay.active{
+    opacity:1;
+    visibility:visible;
+  }
+  body.blurred > .wrapper{
+    filter: blur(6px);
+    transition: filter 0.4s ease;
+    pointer-events:none;
+  }
+
+  .letter-popup{
+    position:relative;
+    max-width: 480px;
+    width:100%;
+    max-height: 88vh;
+    overflow-y:auto;
+    background:
+      radial-gradient(circle at 90% 10%, #ffe0ec 0%, transparent 35%),
+      linear-gradient(160deg, #fff8fa 0%, #ffeef4 100%);
+    border: 2px solid var(--black);
+    border-radius: 20px;
+    padding: 34px 30px 30px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.45), 0 0 0 4px #ffd3e4;
+    transform: scale(0.85) translateY(30px);
+    transition: transform 0.4s cubic-bezier(.34,1.56,.64,1);
+  }
+  .overlay.active .letter-popup{
+    transform: scale(1) translateY(0);
+  }
+
+  .close-btn{
+    position:absolute;
+    top:12px;
+    right:14px;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    background: var(--black);
+    color:#fff;
+    border:none;
+    font-size:18px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .close-btn:hover{
+    background: var(--pink-deep);
+    transform: rotate(90deg);
+  }
+
+  .letter-heading{
+    text-align:center;
+    font-family:'Great Vibes', cursive;
+    font-size: 36px;
+    color: var(--pink-deep);
+    margin-bottom: 2px;
+  }
+  .letter-sub{
+    text-align:center;
+    font-family:'Poppins', sans-serif;
+    font-style: italic;
+    font-weight: 300;
+    color:#a85273;
+    font-size:13.5px;
+    margin-bottom: 16px;
+  }
+
+  .letter-body{
+    font-family:'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 15.5px;
+    line-height: 1.85;
+    color: #4a2b36;
+  }
+  .letter-body p{
+    margin-bottom: 14px;
+  }
+  .letter-body .highlight{
+    color: var(--pink-deep);
+    font-weight:600;
+  }
+
+  .sign-off{
+    margin-top: 18px;
+    text-align:right;
+    font-family:'Poppins', sans-serif;
+    font-weight: 600;
+    font-style: italic;
+    font-size: 17px;
+    color:#c73d76;
+  }
+
+  .heart-divider{
+    text-align:center;
+    margin: 14px 0;
+    color: var(--pink);
+    font-size: 15px;
+    letter-spacing: 8px;
+  }
+
+  /* quiz popup */
+  .quiz-popup{
+    position:relative;
+    max-width: 480px;
+    width:100%;
+    max-height: 88vh;
+    overflow-y:auto;
+    background:
+      radial-gradient(circle at 90% 10%, #ffe0ec 0%, transparent 35%),
+      linear-gradient(160deg, #fff8fa 0%, #ffeef4 100%);
+    border: 2px solid var(--black);
+    border-radius: 20px;
+    padding: 30px 26px 26px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.45), 0 0 0 4px #ffd3e4;
+    transform: scale(0.85) translateY(30px);
+    transition: transform 0.4s cubic-bezier(.34,1.56,.64,1);
+  }
+  .overlay.active .quiz-popup{
+    transform: scale(1) translateY(0);
+  }
+
+  .quiz-title{
+    text-align:center;
+    font-family:'Poppins', sans-serif;
+    font-weight:600;
+    font-size: 15px;
+    letter-spacing:1px;
+    color: var(--pink-deep);
+    text-transform:uppercase;
+    margin-bottom: 14px;
+  }
+
+  .quiz-question{
+    font-family:'Poppins', sans-serif;
+    font-size: 14.5px;
+    line-height:1.75;
+    color:#4a2b36;
+    background: #fff;
+    border: 1px solid #ffd3e4;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 18px;
+  }
+
+  .quiz-options{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .quiz-opt{
+    font-family:'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight:500;
+    text-align:left;
+    background:#fff;
+    border: 1.5px solid var(--pink-light);
+    border-radius: 10px;
+    padding: 12px 16px;
+    color:#3a2530;
+    cursor:pointer;
+    transition: all 0.2s ease;
+  }
+  .quiz-opt:hover{
+    border-color: var(--pink);
+    background: #fff5f8;
+    transform: translateX(2px);
+  }
+
+  .quiz-feedback{
+    margin-top: 14px;
+    text-align:center;
+    font-family:'Poppins', sans-serif;
+    font-weight:600;
+    font-size: 14px;
+    color: #d32f2f;
+    display:none;
+  }
+  .quiz-feedback.show{
+    display:block;
+    animation: shakeIt 0.4s ease;
+  }
+  @keyframes shakeIt{
+    0%,100%{transform: translateX(0);}
+    25%{transform: translateX(-6px);}
+    75%{transform: translateX(6px);}
+  }
+
+  @media (max-width: 500px){
+    .heading{font-size:44px;}
+    .frame{padding:16px 14px 22px;}
+    .letter-body{font-size:18px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+  <div class="frame">
+    <div class="title-top">You're my favourite person ♡</div>
+    <div class="heading">Kuchu Puchu</div>
+
+    <div class="photo-holder">
+      <img src="https://plain-apac-prod-public.komododecks.com/202607/21/rNHxMsnYtooo5rSDEVAM/image.jpg" alt="Kuchu Puchu">
+    </div>
+
+    <div class="caption">stay beautiful always, meri jaan ✨</div>
+
+    <div class="letter-box" id="openLetter">
+      <div class="env">💌</div>
+      <div class="txt">
+        <strong>Ek chhota sa letter hai tumhare liye...</strong>
+        <span>tap karo aur padho ♡</span>
+      </div>
+    </div>
+
+    <div class="footer-note">keep shining & inspiring everyone around you 🦋</div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="quiz-popup" id="quizPopup">
+    <button class="close-btn" id="closeQuiz">✕</button>
+    <div class="quiz-title">Ek chhota sa test 📝</div>
+    <div class="quiz-question">
+      I'm trying my best baby to fix everything, ik i do mistake's but i'll be better i promise ,, i swear i'll be better ,, i've already manifest our wedding ,, And now i want to only marry , <strong>MISS SONAKSHI ROY BASAK</strong>, Daughter of Roy khandan ,, i promise i'll never leave you , I swear believe me
+    </div>
+    <div class="quiz-options">
+      <button class="quiz-opt" data-correct="false">I believe You babyy</button>
+      <button class="quiz-opt" data-correct="false">I lobee youu moree</button>
+      <button class="quiz-opt" data-correct="true">HELP ME DADDY !!</button>
+      <button class="quiz-opt" data-correct="false">Ikr</button>
+    </div>
+    <div class="quiz-feedback" id="quizFeedback">Wrong Answer, U don't love me, Choose the right one bitcoin</div>
+  </div>
+
+  <div class="letter-popup" id="letterPopup" style="display:none;">
+    <button class="close-btn" id="closeLetter">✕</button>
+    <div class="letter-heading">Mrs. Gupta 💗</div>
+    <div class="letter-sub">— ek chhoti si sorry, dher saara pyaar ke saath —</div>
+    <div class="heart-divider">♡ ♡ ♡</div>
+
+    <div class="letter-body">
+      <p>Mujhe pata hai maine galti ki, aur sorry kehna kaafi nahi hai... par phir bhi, <span class="highlight">I'm sorry, Mrs. Gupta.</span> Sach mein.</p>
+
+      <p>Jab se hum mile hain, tumne meri zindagi ko itna khoobsurat bana diya hai ki mujhe kabhi kabhi believe hi nahi hota ki itni pyaari si ladki mujhe mil gayi. Aur uss zindagi mein main tumhe hurt karu — yeh sochke hi mera dil bhaari ho jaata hai.</p>
+
+      <p>Tumhari woh chhoti si muskurahat, jab tum kuchh sochte hue apne baal peeche karti ho, jab tum gussa hoke bhi cute lagti ho — sab kuch mujhe itna miss ho raha hai. Sorry, Puchu. Meri Kuchu Puchu.</p>
+
+      <p>Main promise karta hoon ki aage se aur zyada dhyaan rakhunga. Tumhari feelings sabse pehle. Tumhari smile meri sabse badi zaroorat hai, aur main usse kabhi fade nahi hone dunga.</p>
+
+      <p>Tum meri favourite person ho — <span class="highlight">aaj bhi, hamesha bhi.</span> Jab tak tum yeh letter padh rahi ho, mujhe pata hai tumhare stomach mein thoda thoda butterflies fly kar rahe honge... waise hi jaise mere dil mein rehte hain jab bhi tumhe dekhta hoon. 🦋</p>
+
+      <p>So please... ek chhoti si smile de do mujhe. Tumhara gussa mujhse zyada der tak reh hi nahi sakta na? 😌💗</p>
+    </div>
+
+    <div class="sign-off">Sorry & Love,<br>Mr. Gupta</div>
+  </div>
+</div>
+
+<script>
+  // floating hearts generator
+  const heartsArr = ['💗','💕','♡','💖','🌸'];
+  const heartCount = 22;
+  for(let i=0;i<heartCount;i++){
+    const h = document.createElement('div');
+    h.className = 'heart';
+    h.textContent = heartsArr[Math.floor(Math.random()*heartsArr.length)];
+    h.style.left = Math.random()*100 + 'vw';
+    h.style.fontSize = (14 + Math.random()*22) + 'px';
+    h.style.animationDuration = (8 + Math.random()*10) + 's';
+    h.style.animationDelay = (Math.random()*10) + 's';
+    document.body.appendChild(h);
+  }
+
+  const overlay = document.getElementById('overlay');
+  const openBtn = document.getElementById('openLetter');
+  const closeBtn = document.getElementById('closeLetter');
+  const closeQuizBtn = document.getElementById('closeQuiz');
+  const quizPopup = document.getElementById('quizPopup');
+  const letterPopup = document.getElementById('letterPopup');
+  const quizFeedback = document.getElementById('quizFeedback');
+  const quizOpts = document.querySelectorAll('.quiz-opt');
+
+  openBtn.addEventListener('click', () => {
+    quizPopup.style.display = 'block';
+    letterPopup.style.display = 'none';
+    quizFeedback.classList.remove('show');
+    overlay.classList.add('active');
+    document.body.classList.add('blurred');
+  });
+
+  quizOpts.forEach(opt => {
+    opt.addEventListener('click', () => {
+      const isCorrect = opt.getAttribute('data-correct') === 'true';
+      if(isCorrect){
+        quizFeedback.classList.remove('show');
+        quizPopup.style.display = 'none';
+        letterPopup.style.display = 'block';
+      } else {
+        quizFeedback.classList.remove('show');
+        void quizFeedback.offsetWidth;
+        quizFeedback.classList.add('show');
+      }
+    });
+  });
+
+  function closeOverlay(){
+    overlay.classList.remove('active');
+    document.body.classList.remove('blurred');
+  }
+
+  closeBtn.addEventListener('click', closeOverlay);
+  closeQuizBtn.addEventListener('click', closeOverlay);
+  overlay.addEventListener('click', (e) => {
+    if(e.target === overlay) closeOverlay();
+  });
+</script>
+
+</body>
+</html>
