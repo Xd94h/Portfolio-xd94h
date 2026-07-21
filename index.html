@@ -221,7 +221,13 @@
   .work-card:hover{border-color:var(--amber); border-style:solid; transform:translateY(-4px);}
   .work-top{display:flex; justify-content:space-between; align-items:flex-start;}
   .work-idx{font-family:var(--mono); color:var(--green-dim); font-size:.8rem;}
-  .work-cat{font-family:var(--mono); font-size:.65rem; color:var(--amber); border:1px solid var(--amber); padding:3px 8px; border-radius:2px; letter-spacing:.5px;}
+  .work-cat{font-family:var(--mono); font-size:.65rem; color:var(--amber); border:1px solid var(--amber); padding:3px 8px; border-radius:2px; letter-spacing:.5px; display:inline-flex; align-items:center; gap:6px;}
+  .work-cat .status-dot{width:7px; height:7px; border-radius:50%; display:inline-block; animation: statusPulse 1.6s ease-in-out infinite;}
+  .work-cat.is-live{color:var(--green); border-color:var(--green); background:rgba(57,255,138,0.06);}
+  .work-cat.is-live .status-dot{background:var(--green); box-shadow:0 0 8px 1px var(--green);}
+  .work-cat.is-dead{color:#ff4d4d; border-color:#ff4d4d; background:rgba(255,77,77,0.06);}
+  .work-cat.is-dead .status-dot{background:#ff4d4d; box-shadow:0 0 8px 1px #ff4d4d;}
+  @keyframes statusPulse{0%,100%{opacity:1; transform:scale(1);} 50%{opacity:.2; transform:scale(.75);}}
   .work-card h3{font-family:var(--display); font-size:1.2rem; margin-top:16px; color:var(--text);}
   .work-card p{color:var(--text-dim); font-size:.85rem; margin-top:8px; line-height:1.55;}
   .work-open{
@@ -444,25 +450,25 @@
     </div>
     <div class="work-grid">
       <a href="project-one.html" target="_blank" rel="noopener" class="work-card reveal">
-        <div class="work-top"><span class="work-idx">/01</span><span class="work-cat">LIVE</span></div>
+        <div class="work-top"><span class="work-idx">/01</span><span class="work-cat is-live"><span class="status-dot"></span>LIVE</span></div>
         <h3>Passport Size Tool</h3>
         <p>A browser-based tool that turns any photo into a print-ready 6-up passport photo sheet — crop, template, export, done.</p>
         <span class="work-open">VIEW PROJECT →</span>
       </a>
       <a href="project-two.html" target="_blank" rel="noopener" class="work-card reveal">
-        <div class="work-top"><span class="work-idx">/02</span><span class="work-cat">LIVE</span></div>
+        <div class="work-top"><span class="work-idx">/02</span><span class="work-cat is-live"><span class="status-dot"></span>LIVE</span></div>
         <h3>Xd Scanner</h3>
         <p>Auto-aligns scanned document corners and drops them straight into a passport-sheet PSD template — scan, align, place, print.</p>
         <span class="work-open">VIEW PROJECT →</span>
       </a>
       <a href="project-three.html" target="_blank" rel="noopener" class="work-card reveal">
-        <div class="work-top"><span class="work-idx">/03</span><span class="work-cat">LIVE</span></div>
+        <div class="work-top"><span class="work-idx">/03</span><span class="work-cat is-live"><span class="status-dot"></span>LIVE</span></div>
         <h3>Road Rush 3D</h3>
         <p>Drive an endless 3D road, dodge traffic, and survive rising speed — with a live HUD tracking score, lives, and time.</p>
         <span class="work-open">VIEW PROJECT →</span>
       </a>
       <a href="project-four.html" target="_blank" rel="noopener" class="work-card reveal">
-        <div class="work-top"><span class="work-idx">/04</span><span class="work-cat">PLACEHOLDER</span></div>
+        <div class="work-top"><span class="work-idx">/04</span><span class="work-cat is-dead"><span class="status-dot"></span>NOT LIVE</span></div>
         <h3>Project Four</h3>
         <p>Add a short description of this project here.</p>
         <span class="work-open">VIEW PROJECT →</span>
