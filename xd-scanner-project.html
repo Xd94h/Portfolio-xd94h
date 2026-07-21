@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XD Scanner // Arigastva Agency</title>
+<style>
+  :root{
+    --bg:#060807;
+    --bg-grid:#0d1210;
+    --green:#3dffa0;
+    --green-dim:#1f6b45;
+    --orange:#ffb648;
+    --orange-dim:#a97426;
+    --ink:#e8ece9;
+    --ink-dim:#8b9a92;
+    --panel:#0b0f0d;
+    --line:#17231d;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Segoe UI',Arial,sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  .mono{font-family:'Consolas','Courier New',monospace;}
+
+  .grid-bg{
+    position:fixed;top:0;left:0;width:100%;height:100%;
+    background-image:
+      linear-gradient(rgba(61,255,160,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(61,255,160,0.05) 1px, transparent 1px);
+    background-size:42px 42px;
+    z-index:-2;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+  }
+  .glow{
+    position:fixed;top:-200px;left:50%;transform:translateX(-50%);
+    width:900px;height:500px;
+    background:radial-gradient(ellipse, rgba(61,255,160,0.10), transparent 70%);
+    z-index:-1;
+  }
+
+  header{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:22px 60px;
+    border-bottom:1px solid var(--line);
+    position:sticky;top:0;background:rgba(6,8,7,0.85);backdrop-filter:blur(6px);
+    z-index:10;
+  }
+  .logo{
+    font-weight:800;letter-spacing:1px;font-size:15px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .logo .dot{
+    width:8px;height:8px;border-radius:50%;background:var(--green);
+    box-shadow:0 0 10px var(--green);
+  }
+  nav a{
+    color:var(--ink-dim);text-decoration:none;font-size:13px;
+    margin-left:32px;letter-spacing:0.5px;
+    font-family:'Consolas','Courier New',monospace;
+    transition:color .2s;
+  }
+  nav a:hover{color:var(--orange);}
+
+  .wrap{max-width:1100px;margin:0 auto;padding:0 60px;}
+
+  /* HERO */
+  .hero{padding:90px 0 60px;}
+  .sys-line{
+    color:var(--green);font-size:13px;letter-spacing:0.5px;
+    margin-bottom:18px;display:flex;align-items:center;gap:8px;
+  }
+  .sys-line .cursor{
+    width:8px;height:16px;background:var(--green);display:inline-block;
+    animation:blink 1s step-end infinite;
+  }
+  @keyframes blink{50%{opacity:0;}}
+  .eyebrow{
+    color:var(--orange);font-family:'Consolas','Courier New',monospace;
+    font-size:12px;letter-spacing:2px;margin-bottom:14px;
+    border-left:2px solid var(--orange);padding-left:10px;
+  }
+  h1.title{
+    font-size:64px;font-weight:800;letter-spacing:-1px;
+    margin-bottom:6px;line-height:1.05;
+  }
+  h1.title .xd{
+    background:linear-gradient(90deg,#ffffff,var(--green));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  h1.title .scanner{
+    background:linear-gradient(90deg,#ff9d2f,#ffc766);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .subtitle{
+    font-size:19px;color:var(--ink-dim);margin:18px 0 26px;max-width:660px;
+  }
+  .subtitle b{color:var(--ink);}
+  .owner-tag{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'Consolas','Courier New',monospace;
+    font-size:13px;color:var(--orange-dim);
+    border:1px solid var(--orange-dim);border-radius:20px;
+    padding:6px 16px;margin-bottom:30px;
+  }
+  .owner-tag a{color:var(--orange);text-decoration:none;}
+  .owner-tag b{color:var(--orange);}
+
+  .cta-row{display:flex;gap:16px;margin-top:10px;flex-wrap:wrap;}
+  .btn{
+    padding:15px 26px;border-radius:8px;font-weight:700;font-size:14px;
+    text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+    letter-spacing:0.3px;transition:transform .15s, box-shadow .15s;
+  }
+  .btn-fill{
+    background:linear-gradient(90deg,#ff9d2f,#ffc766);color:#1a1200;
+    box-shadow:0 0 22px rgba(255,157,47,0.35);
+  }
+  .btn-fill:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(255,157,47,0.5);}
+  .btn-outline{
+    border:1px solid var(--green-dim);color:var(--green);background:transparent;
+  }
+  .btn-outline:hover{border-color:var(--green);background:rgba(61,255,160,0.06);transform:translateY(-2px);}
+
+  .sec-label{
+    display:flex;align-items:baseline;gap:14px;margin-bottom:34px;
+  }
+  .sec-num{color:var(--green-dim);font-family:'Consolas','Courier New',monospace;font-size:13px;}
+  .sec-title{font-size:30px;font-weight:800;}
+  .sec-title span{color:var(--orange);}
+  section{padding:70px 0;border-top:1px solid var(--line);}
+
+  .overview-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:50px;align-items:start;}
+  .overview-grid p{color:var(--ink-dim);margin-bottom:16px;font-size:15.5px;}
+  .overview-grid p b{color:var(--ink);}
+  .stat-panel{
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:22px 24px;margin-bottom:14px;
+  }
+  .stat-panel .k{font-family:'Consolas','Courier New',monospace;font-size:11px;color:var(--ink-dim);letter-spacing:1px;}
+  .stat-panel .v{font-size:19px;font-weight:700;color:var(--green);margin-top:4px;}
+
+  /* WORKFLOW PILLS (matches the tool's own step tabs) */
+  .pill-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px;}
+  .pill{
+    font-family:'Consolas','Courier New',monospace;font-size:13px;
+    padding:9px 18px;border-radius:20px;border:1px solid var(--line);
+    color:var(--ink-dim);
+  }
+  .pill.active{
+    background:linear-gradient(90deg,#ff9d2f,#ffc766);color:#1a1200;
+    border-color:transparent;font-weight:700;
+  }
+
+  .pipeline{display:flex;flex-direction:column;gap:0;}
+  .step{
+    display:grid;grid-template-columns:70px 1fr;gap:26px;padding:26px 0;
+    border-bottom:1px solid var(--line);position:relative;
+  }
+  .step:last-child{border-bottom:none;}
+  .step-num{
+    font-family:'Consolas','Courier New',monospace;color:var(--orange);
+    font-size:13px;padding-top:3px;
+  }
+  .step-num .bar{
+    display:block;width:1px;height:100%;background:var(--line);
+    margin:8px auto 0;
+  }
+  .step h3{font-size:19px;margin-bottom:8px;}
+  .step h3 em{color:var(--green);font-style:normal;}
+  .step p{color:var(--ink-dim);font-size:15px;max-width:600px;}
+
+  .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .feat-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:26px 22px;transition:border-color .2s, transform .2s;
+  }
+  .feat-card:hover{border-color:var(--green-dim);transform:translateY(-4px);}
+  .feat-card .ic{
+    width:38px;height:38px;border:1px solid var(--orange-dim);border-radius:8px;
+    display:flex;align-items:center;justify-content:center;color:var(--orange);
+    font-family:'Consolas','Courier New',monospace;margin-bottom:16px;font-size:15px;
+  }
+  .feat-card h4{font-size:16px;margin-bottom:8px;}
+  .feat-card p{color:var(--ink-dim);font-size:14px;}
+
+  .tag-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px;}
+  .tag{
+    font-family:'Consolas','Courier New',monospace;font-size:12.5px;
+    color:var(--green);border:1px solid var(--green-dim);
+    padding:7px 14px;border-radius:20px;background:rgba(61,255,160,0.04);
+  }
+
+  .cta-panel{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:50px 46px;text-align:center;
+  }
+  .cta-panel h2{font-size:30px;margin-bottom:12px;}
+  .cta-panel h2 span{color:var(--orange);}
+  .cta-panel p{color:var(--ink-dim);margin-bottom:28px;font-size:15.5px;}
+
+  footer{padding:60px 0 0;}
+  .social-row{
+    display:flex;justify-content:center;gap:16px;padding-bottom:40px;
+  }
+  .social-row a{
+    width:44px;height:44px;border-radius:50%;border:1px solid var(--orange-dim);
+    display:flex;align-items:center;justify-content:center;color:var(--orange);
+    text-decoration:none;font-size:17px;transition:background .2s, transform .2s;
+  }
+  .social-row a:hover{background:rgba(255,182,72,0.08);transform:translateY(-3px);}
+  .footer-divider{border-top:1px solid var(--line);}
+  .footer-bottom{
+    text-align:center;padding:44px 0 40px;
+  }
+  .footer-bottom .brand{font-size:20px;font-weight:800;letter-spacing:0.5px;color:#fff;margin-bottom:16px;}
+  .footer-bottom .copy{
+    font-family:'Consolas','Courier New',monospace;font-size:12.5px;color:var(--ink-dim);
+    letter-spacing:0.5px;
+  }
+  .footer-bottom .copy em{color:var(--orange);font-style:italic;font-weight:600;}
+
+  @media(max-width:900px){
+    .wrap{padding:0 22px;}
+    header{padding:18px 22px;}
+    h1.title{font-size:40px;}
+    .overview-grid{grid-template-columns:1fr;}
+    .feat-grid{grid-template-columns:1fr;}
+    nav a{margin-left:16px;font-size:11px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="glow"></div>
+
+<header>
+  <div class="logo"><span class="dot"></span>ARIGASTVA_AGENCY</div>
+  <nav>
+    <a href="#overview">// OVERVIEW</a>
+    <a href="#pipeline">// PIPELINE</a>
+    <a href="#stack">// STACK</a>
+    <a href="#contact">// CONTACT</a>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="sys-line mono">SYSTEM: PROJECT_LOG/XD_SCANNER.EXE — ACCESS GRANTED<span class="cursor"></span></div>
+    <div class="eyebrow">PROJECT_001 — DOCUMENT SCANNER &amp; PSD AUTO PLACER UTILITY</div>
+    <h1 class="title"><span class="xd">XD</span> <span class="scanner">SCANNER</span></h1>
+    <p class="subtitle">Scan the front and back of any document, <b>align the corners automatically</b>, and drop the result straight into a passport-sheet PSD template. Scan → Align → Auto Place → Print.</p>
+    <div class="owner-tag mono">OWNER — <a href="https://www.instagram.com/oxd94h" target="_blank"><b>@OXD94H</b></a> · BUILT BY SHIVAM</div>
+    <div class="cta-row">
+      <a class="btn btn-fill" href="https://xd94h.github.io/Xd-Scanner/" target="_blank">LAUNCH TOOL →</a>
+      <a class="btn btn-outline" href="#pipeline">SEE HOW IT WORKS</a>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section id="overview">
+    <div class="sec-label"><span class="sec-num mono">01</span><span class="sec-title">Project <span>Overview</span></span></div>
+    <div class="overview-grid">
+      <div>
+        <p><b>XD Scanner</b> is a document-scanning utility built to replace the "flatbed scanner + manual crop + manual paste" routine most people still use to prep documents for passport-style print sheets.</p>
+        <p>Upload a front image, and optionally a back image — <b>corner detection and alignment run automatically</b>, straightening and cropping the scan as if it came off a real document scanner. The back scan can be skipped entirely if it's not needed.</p>
+        <p>Once aligned, the scan is <b>auto-placed into a PSD passport-sheet template</b> — same engine that powers the Passport Size Tool — and exported ready for print. The whole flow runs client-side, guided by a clean five-step wizard: Upload → Align Front → Align Back → Template → Preview.</p>
+      </div>
+      <div>
+        <div class="stat-panel"><div class="k mono">ROLE</div><div class="v">Full-stack Builder</div></div>
+        <div class="stat-panel"><div class="k mono">FOCUS</div><div class="v">Document Utility Tool</div></div>
+        <div class="stat-panel"><div class="k mono">VERSION</div><div class="v">v1.1.3</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PIPELINE -->
+  <section id="pipeline">
+    <div class="sec-label"><span class="sec-num mono">02</span><span class="sec-title">The 5-Step <span>Wizard</span></span></div>
+    <div class="pill-row mono">
+      <span class="pill active">01 Upload</span>
+      <span class="pill">02 Align Front</span>
+      <span class="pill">03 Align Back</span>
+      <span class="pill">04 Template</span>
+      <span class="pill">05 Preview</span>
+    </div>
+    <div class="pipeline">
+      <div class="step">
+        <div class="step-num mono">01<span class="bar"></span></div>
+        <div><h3><em>Upload</em> front &amp; back</h3><p>Drop in the front image (JPG/PNG) — the back image is optional and can be skipped at any point if the document is single-sided.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num mono">02<span class="bar"></span></div>
+        <div><h3><em>Align</em> the front scan</h3><p>Corners are detected and squared off automatically, correcting perspective and rotation so the document looks flatbed-scanned.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num mono">03<span class="bar"></span></div>
+        <div><h3><em>Align</em> the back scan</h3><p>Same auto-alignment applied to the back side, keeping both faces consistently cropped and squared.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num mono">04<span class="bar"></span></div>
+        <div><h3><em>Auto-place</em> into template</h3><p>The aligned scan is dropped into a PSD passport-sheet template — positioning and padding calculated automatically.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num mono">05</div>
+        <div><h3><em>Preview</em> &amp; export</h3><p>Review the final sheet before committing, then export it ready for print.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="sec-label"><span class="sec-num mono">03</span><span class="sec-title">Key <span>Features</span></span></div>
+    <div class="feat-grid">
+      <div class="feat-card"><div class="ic">Cr</div><h4>Auto Corner Detection</h4><p>Finds and squares off document edges automatically — no manual corner-dragging.</p></div>
+      <div class="feat-card"><div class="ic">F/B</div><h4>Front &amp; Back Support</h4><p>Scan both sides of a document, or skip the back entirely for single-sided docs.</p></div>
+      <div class="feat-card"><div class="ic">Ps</div><h4>PSD Auto-Placer</h4><p>Aligned scans are auto-placed into passport-sheet PSD templates with calculated padding.</p></div>
+      <div class="feat-card"><div class="ic">Wz</div><h4>Guided 5-Step Wizard</h4><p>A clear step-by-step flow — Upload, Align Front, Align Back, Template, Preview — keeps the process error-free.</p></div>
+      <div class="feat-card"><div class="ic">Pv</div><h4>Live Preview Before Export</h4><p>See the final composed sheet before committing to a download.</p></div>
+      <div class="feat-card"><div class="ic">v1</div><h4>Versioned Builds</h4><p>Actively maintained utility, currently shipping as v1.1.3.</p></div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack">
+    <div class="sec-label"><span class="sec-num mono">04</span><span class="sec-title">Built <span>Client-Side</span></span></div>
+    <p style="color:var(--ink-dim);max-width:660px;margin-bottom:20px;font-size:15.5px;">No backend server — corner detection, alignment, and PSD placement all run in the browser, sharing the same template engine as the Passport Size Tool.</p>
+    <div class="tag-row">
+      <span class="tag">HTML5 CANVAS</span>
+      <span class="tag">JAVASCRIPT</span>
+      <span class="tag">EDGE / CORNER DETECTION</span>
+      <span class="tag">PSD PARSING</span>
+      <span class="tag">CLIENT-SIDE STORAGE</span>
+      <span class="tag">RESPONSIVE UI</span>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="cta-panel">
+      <h2>Need a scanning tool <span>built for your workflow?</span></h2>
+      <p>From document utilities to full brand systems — Arigastva Agency builds it end to end.</p>
+      <div class="cta-row" style="justify-content:center;">
+        <a class="btn btn-fill" href="https://xd94h.github.io/Xd-Scanner/" target="_blank">TRY THE LIVE TOOL →</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="social-row">
+    <a href="https://www.instagram.com/oxd94h" target="_blank" title="Instagram">◎</a>
+    <a href="#" title="WhatsApp">☏</a>
+    <a href="#" title="Email">✉</a>
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-bottom">
+    <div class="brand">ARIGASTVA.AGENCY</div>
+    <div class="copy">© 2026 ARIGASTVA AGENCY — DESIGNED &amp; BUILT BY <em>Shivam</em></div>
+  </div>
+</footer>
+
+</body>
+</html>
