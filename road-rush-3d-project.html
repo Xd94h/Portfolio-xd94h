@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Road Rush 3D // Arigastva Agency</title>
+<style>
+  :root{
+    --bg:#060807;
+    --bg-grid:#0d1210;
+    --green:#3dffa0;
+    --green-dim:#1f6b45;
+    --orange:#ffb648;
+    --orange-dim:#a97426;
+    --ink:#e8ece9;
+    --ink-dim:#8b9a92;
+    --panel:#0b0f0d;
+    --line:#17231d;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Segoe UI',Arial,sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  .mono{font-family:'Consolas','Courier New',monospace;}
+
+  .grid-bg{
+    position:fixed;top:0;left:0;width:100%;height:100%;
+    background-image:
+      linear-gradient(rgba(61,255,160,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(61,255,160,0.05) 1px, transparent 1px);
+    background-size:42px 42px;
+    z-index:-2;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+  }
+  .glow{
+    position:fixed;top:-200px;left:50%;transform:translateX(-50%);
+    width:900px;height:500px;
+    background:radial-gradient(ellipse, rgba(61,255,160,0.10), transparent 70%);
+    z-index:-1;
+  }
+
+  header{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:22px 60px;
+    border-bottom:1px solid var(--line);
+    position:sticky;top:0;background:rgba(6,8,7,0.85);backdrop-filter:blur(6px);
+    z-index:10;
+  }
+  .logo{
+    font-weight:800;letter-spacing:1px;font-size:15px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .logo .dot{
+    width:8px;height:8px;border-radius:50%;background:var(--green);
+    box-shadow:0 0 10px var(--green);
+  }
+  nav a{
+    color:var(--ink-dim);text-decoration:none;font-size:13px;
+    margin-left:32px;letter-spacing:0.5px;
+    font-family:'Consolas','Courier New',monospace;
+    transition:color .2s;
+  }
+  nav a:hover{color:var(--orange);}
+
+  .wrap{max-width:1100px;margin:0 auto;padding:0 60px;}
+
+  /* HERO */
+  .hero{padding:90px 0 60px;}
+  .sys-line{
+    color:var(--green);font-size:13px;letter-spacing:0.5px;
+    margin-bottom:18px;display:flex;align-items:center;gap:8px;
+  }
+  .sys-line .cursor{
+    width:8px;height:16px;background:var(--green);display:inline-block;
+    animation:blink 1s step-end infinite;
+  }
+  @keyframes blink{50%{opacity:0;}}
+  .eyebrow{
+    color:var(--orange);font-family:'Consolas','Courier New',monospace;
+    font-size:12px;letter-spacing:2px;margin-bottom:14px;
+    border-left:2px solid var(--orange);padding-left:10px;
+  }
+  h1.title{
+    font-size:64px;font-weight:800;letter-spacing:-1px;
+    margin-bottom:6px;line-height:1.05;
+  }
+  h1.title .road{
+    background:linear-gradient(90deg,#ffffff,var(--green));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  h1.title .rush{
+    background:linear-gradient(90deg,#ff9d2f,#ffc766);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .subtitle{
+    font-size:19px;color:var(--ink-dim);margin:18px 0 26px;max-width:660px;
+  }
+  .subtitle b{color:var(--ink);}
+  .owner-tag{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'Consolas','Courier New',monospace;
+    font-size:13px;color:var(--orange-dim);
+    border:1px solid var(--orange-dim);border-radius:20px;
+    padding:6px 16px;margin-bottom:30px;
+  }
+  .owner-tag a{color:var(--orange);text-decoration:none;}
+  .owner-tag b{color:var(--orange);}
+
+  .cta-row{display:flex;gap:16px;margin-top:10px;flex-wrap:wrap;}
+  .btn{
+    padding:15px 26px;border-radius:8px;font-weight:700;font-size:14px;
+    text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+    letter-spacing:0.3px;transition:transform .15s, box-shadow .15s;
+  }
+  .btn-fill{
+    background:linear-gradient(90deg,#ff9d2f,#ffc766);color:#1a1200;
+    box-shadow:0 0 22px rgba(255,157,47,0.35);
+  }
+  .btn-fill:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(255,157,47,0.5);}
+  .btn-outline{
+    border:1px solid var(--green-dim);color:var(--green);background:transparent;
+  }
+  .btn-outline:hover{border-color:var(--green);background:rgba(61,255,160,0.06);transform:translateY(-2px);}
+
+  .sec-label{
+    display:flex;align-items:baseline;gap:14px;margin-bottom:34px;
+  }
+  .sec-num{color:var(--green-dim);font-family:'Consolas','Courier New',monospace;font-size:13px;}
+  .sec-title{font-size:30px;font-weight:800;}
+  .sec-title span{color:var(--orange);}
+  section{padding:70px 0;border-top:1px solid var(--line);}
+
+  .overview-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:50px;align-items:start;}
+  .overview-grid p{color:var(--ink-dim);margin-bottom:16px;font-size:15.5px;}
+  .overview-grid p b{color:var(--ink);}
+  .stat-panel{
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:22px 24px;margin-bottom:14px;
+  }
+  .stat-panel .k{font-family:'Consolas','Courier New',monospace;font-size:11px;color:var(--ink-dim);letter-spacing:1px;}
+  .stat-panel .v{font-size:19px;font-weight:700;color:var(--green);margin-top:4px;}
+
+  /* HUD ROW — mirrors the in-game top bar (Level, Score, Lives, Time, Speed) */
+  .hud-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px;}
+  .hud-chip{
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:14px 20px;font-family:'Consolas','Courier New',monospace;
+  }
+  .hud-chip .k{font-size:11px;color:var(--ink-dim);letter-spacing:1px;}
+  .hud-chip .v{font-size:16px;color:var(--orange);font-weight:700;margin-top:3px;}
+
+  .pipeline{display:flex;flex-direction:column;gap:0;}
+  .step{
+    display:grid;grid-template-columns:70px 1fr;gap:26px;padding:26px 0;
+    border-bottom:1px solid var(--line);position:relative;
+  }
+  .step:last-child{border-bottom:none;}
+  .step-num{
+    font-family:'Consolas','Courier New',monospace;color:var(--orange);
+    font-size:13px;padding-top:3px;
+  }
+  .step-num .bar{
+    display:block;width:1px;height:100%;background:var(--line);
+    margin:8px auto 0;
+  }
+  .step h3{font-size:19px;margin-bottom:8px;}
+  .step h3 em{color:var(--green);font-style:normal;}
+  .step p{color:var(--ink-dim);font-size:15px;max-width:600px;}
+
+  .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .feat-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:26px 22px;transition:border-color .2s, transform .2s;
+  }
+  .feat-card:hover{border-color:var(--green-dim);transform:translateY(-4px);}
+  .feat-card .ic{
+    width:38px;height:38px;border:1px solid var(--orange-dim);border-radius:8px;
+    display:flex;align-items:center;justify-content:center;color:var(--orange);
+    font-family:'Consolas','Courier New',monospace;margin-bottom:16px;font-size:15px;
+  }
+  .feat-card h4{font-size:16px;margin-bottom:8px;}
+  .feat-card p{color:var(--ink-dim);font-size:14px;}
+
+  .tag-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px;}
+  .tag{
+    font-family:'Consolas','Courier New',monospace;font-size:12.5px;
+    color:var(--green);border:1px solid var(--green-dim);
+    padding:7px 14px;border-radius:20px;background:rgba(61,255,160,0.04);
+  }
+
+  /* PLAYER REVIEW CARD */
+  .review-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:24px 26px;max-width:640px;
+  }
+  .review-card .who{font-weight:700;margin-bottom:4px;}
+  .review-card .stars{color:var(--orange);letter-spacing:2px;font-size:13px;margin-bottom:10px;}
+  .review-card p{color:var(--ink-dim);font-size:14.5px;}
+
+  .cta-panel{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:50px 46px;text-align:center;
+  }
+  .cta-panel h2{font-size:30px;margin-bottom:12px;}
+  .cta-panel h2 span{color:var(--orange);}
+  .cta-panel p{color:var(--ink-dim);margin-bottom:28px;font-size:15.5px;}
+
+  footer{padding:60px 0 0;}
+  .social-row{
+    display:flex;justify-content:center;gap:16px;padding-bottom:40px;
+  }
+  .social-row a{
+    width:44px;height:44px;border-radius:50%;border:1px solid var(--orange-dim);
+    display:flex;align-items:center;justify-content:center;color:var(--orange);
+    text-decoration:none;font-size:17px;transition:background .2s, transform .2s;
+  }
+  .social-row a:hover{background:rgba(255,182,72,0.08);transform:translateY(-3px);}
+  .footer-divider{border-top:1px solid var(--line);}
+  .footer-bottom{
+    text-align:center;padding:44px 0 40px;
+  }
+  .footer-bottom .brand{font-size:20px;font-weight:800;letter-spacing:0.5px;color:#fff;margin-bottom:16px;}
+  .footer-bottom .copy{
+    font-family:'Consolas','Courier New',monospace;font-size:12.5px;color:var(--ink-dim);
+    letter-spacing:0.5px;
+  }
+  .footer-bottom .copy em{color:var(--orange);font-style:italic;font-weight:600;}
+
+  @media(max-width:900px){
+    .wrap{padding:0 22px;}
+    header{padding:18px 22px;}
+    h1.title{font-size:40px;}
+    .overview-grid{grid-template-columns:1fr;}
+    .feat-grid{grid-template-columns:1fr;}
+    nav a{margin-left:16px;font-size:11px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="glow"></div>
+
+<header>
+  <div class="logo"><span class="dot"></span>ARIGASTVA_AGENCY</div>
+  <nav>
+    <a href="#overview">// OVERVIEW</a>
+    <a href="#pipeline">// GAMEPLAY</a>
+    <a href="#stack">// STACK</a>
+    <a href="#contact">// CONTACT</a>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="sys-line mono">SYSTEM: PROJECT_LOG/ROAD_RUSH_3D.EXE — ACCESS GRANTED<span class="cursor"></span></div>
+    <div class="eyebrow">PROJECT_003 — BROWSER-BASED 3D ENDLESS RACER</div>
+    <h1 class="title"><span class="road">ROAD</span> <span class="rush">RUSH 3D</span></h1>
+    <p class="subtitle">An endless 3D road-dodging game — weave through traffic, chase a rising score, and survive as speed keeps climbing. <b>Built to run straight in the browser</b>, no install required.</p>
+    <div class="owner-tag mono">OWNER — <a href="https://www.instagram.com/oxd94h" target="_blank"><b>@OXD94H</b></a> · BUILT BY SHIVAM</div>
+    <div class="cta-row">
+      <a class="btn btn-fill" href="https://xd94h.github.io/road-rush-3d/" target="_blank">PLAY NOW →</a>
+      <a class="btn btn-outline" href="#pipeline">SEE GAMEPLAY</a>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section id="overview">
+    <div class="sec-label"><span class="sec-num mono">01</span><span class="sec-title">Project <span>Overview</span></span></div>
+    <div class="overview-grid">
+      <div>
+        <p><b>Road Rush 3D</b> is a lightweight, endless-runner style racing game rendered in 3D directly in the browser — no downloads, no plugins, just open the link and drive.</p>
+        <p>The player steers a car down an endless road while <b>traffic, obstacles, and scenery scroll past</b>, dodging cars and hazards to rack up score and survive as long as possible. Speed climbs the longer you last, raising the difficulty in real time.</p>
+        <p>A live HUD tracks <b>level, score, lives, elapsed time, and current speed</b>, and the game embeds a rating and review system so players can leave feedback directly on the page.</p>
+      </div>
+      <div>
+        <div class="stat-panel"><div class="k mono">ROLE</div><div class="v">Game Developer</div></div>
+        <div class="stat-panel"><div class="k mono">FOCUS</div><div class="v">3D Browser Game</div></div>
+        <div class="stat-panel"><div class="k mono">GENRE</div><div class="v">Endless Racer / Dodge</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAMEPLAY -->
+  <section id="pipeline">
+    <div class="sec-label"><span class="sec-num mono">02</span><span class="sec-title">Gameplay <span>Loop</span></span></div>
+    <div class="hud-row">
+      <div class="hud-chip"><div class="k">LEVEL</div><div class="v">Progressive</div></div>
+      <div class="hud-chip"><div class="k">SCORE</div><div class="v">Live Counter</div></div>
+      <div class="hud-chip"><div class="k">LIVES</div><div class="v">3 Hearts</div></div>
+      <div class="hud-chip"><div class="k">TIME</div><div class="v">Run Clock</div></div>
+      <div class="hud-chip"><div class="k">SPEED</div><div class="v">Scales Up</div></div>
+    </div>
+    <div class="pipeline">
+      <div class="step">
+        <div class="step-num mono">01<span class="bar"></span></div>
+        <div><h3><em>Drive</em> down an endless road</h3><p>The car moves forward automatically — the player's job is steering left and right to stay in a clear lane.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num mono">02<span class="bar"></span></div>
+        <div><h3><em>Dodge</em> traffic and obstacles</h3><p>Cars, trucks, and hazards populate the road and shoulders; clipping one costs a life, tracked by the heart counter in the HUD.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num mono">03<span class="bar"></span></div>
+        <div><h3><em>Survive</em> as speed rises</h3><p>The longer the run goes, the faster the car moves — score and speed climb together, raising the difficulty in real time.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num mono">04</div>
+        <div><h3><em>Rate</em> and compare runs</h3><p>Players can leave a star rating and written review right on the page, and see what other players thought of their run.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="sec-label"><span class="sec-num mono">03</span><span class="sec-title">Key <span>Features</span></span></div>
+    <div class="feat-grid">
+      <div class="feat-card"><div class="ic">3D</div><h4>Real-Time 3D Rendering</h4><p>Full 3D road, cars, and scenery rendered live in-browser — no plugins or installs.</p></div>
+      <div class="feat-card"><div class="ic">Sp</div><h4>Dynamic Speed Scaling</h4><p>Speed increases the longer a run lasts, keeping difficulty climbing naturally.</p></div>
+      <div class="feat-card"><div class="ic">Hp</div><h4>Live HUD</h4><p>Level, score, lives, time, and speed all update in real time during play.</p></div>
+      <div class="feat-card"><div class="ic">Ob</div><h4>Varied Obstacles</h4><p>Multiple vehicle types and roadside hazards keep every run's traffic pattern different.</p></div>
+      <div class="feat-card"><div class="ic">⭐</div><h4>Built-In Rating System</h4><p>Players can star-rate the game and leave written feedback directly on the page.</p></div>
+      <div class="feat-card"><div class="ic">FS</div><h4>Fullscreen & Share</h4><p>One-click fullscreen mode plus share and restart controls built into the player bar.</p></div>
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section id="review">
+    <div class="sec-label"><span class="sec-num mono">04</span><span class="sec-title">Players Are <span>Saying</span></span></div>
+    <div class="review-card">
+      <div class="who">Vikram_R</div>
+      <div class="stars">★★★★★</div>
+      <p>Hasn't cleared level 14 yet, but calls the challenge genuinely fun — a strong recommend.</p>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack">
+    <div class="sec-label"><span class="sec-num mono">05</span><span class="sec-title">Built <span>for the Browser</span></span></div>
+    <p style="color:var(--ink-dim);max-width:660px;margin-bottom:20px;font-size:15.5px;">A fully client-side 3D game — no installs, no server dependency for core gameplay, playable instantly from a link.</p>
+    <div class="tag-row">
+      <span class="tag">WEBGL / 3D RENDERING</span>
+      <span class="tag">JAVASCRIPT</span>
+      <span class="tag">GAME LOOP & PHYSICS</span>
+      <span class="tag">COLLISION DETECTION</span>
+      <span class="tag">RESPONSIVE UI</span>
+      <span class="tag">RATING SYSTEM</span>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="cta-panel">
+      <h2>Want a game <span>built for your idea?</span></h2>
+      <p>From browser games to full tool suites — Arigastva Agency builds it end to end.</p>
+      <div class="cta-row" style="justify-content:center;">
+        <a class="btn btn-fill" href="https://xd94h.github.io/road-rush-3d/" target="_blank">PLAY ROAD RUSH 3D →</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="social-row">
+    <a href="https://www.instagram.com/oxd94h" target="_blank" title="Instagram">◎</a>
+    <a href="#" title="WhatsApp">☏</a>
+    <a href="#" title="Email">✉</a>
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-bottom">
+    <div class="brand">ARIGASTVA.AGENCY</div>
+    <div class="copy">© 2026 ARIGASTVA AGENCY — DESIGNED &amp; BUILT BY <em>Shivam</em></div>
+  </div>
+</footer>
+
+</body>
+</html>
